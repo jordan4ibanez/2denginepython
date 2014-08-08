@@ -6,6 +6,7 @@ pygame.init()
 
 black = 0,0,0
 white = 255,255,255
+<<<<<<< HEAD
 red = 255,0,0
 #rectangular collision boxes, symetrical to allow quickndirty detection, with oft size/pos modifications
 entity_table = [
@@ -129,3 +130,31 @@ while w < 2000:
 			#elif abs(pointa4[0]-pointb2[0]) > abs(pointa4[1]-pointb2[1]):
 			else:
 				entity_table[0][2][1] = posby - ((sizeay/2)+(sizeby/2))
+=======
+
+entity_table = {
+	"ent0":
+	{
+		"type":  "rectangle",
+		"vertices":
+		(
+			(10,10), #top left
+			(40,10), #top right
+			(40,40), #bottom right
+			(10,40), #bottom left
+		),
+	},
+}
+
+w = 0
+while w < 2000:
+	screen.fill(white)
+	#render entities, if entity does not exist, pass
+	for x in range(1):
+		for y in range(2):
+			if entity_table["ent"+str(x)]["type"] == "rectangle":
+				pygame.draw.polygon(screen,black,entity_table["ent"+str(x)]["vertices"])
+	w = w + 1
+	pygame.display.flip()
+	
+>>>>>>> abcec0eb7fa6145ead989b76754f6977e12dca91
