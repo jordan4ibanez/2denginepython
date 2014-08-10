@@ -1,0 +1,66 @@
+old collision detection
+	#move for testing
+	entity_table[0][2][0],entity_table[0][2][1] = pygame.mouse.get_pos()
+	
+	entity_table[1][2][0] = posbx  = entity_table[1][2][0] + 0.1
+	entity_table[1][2][1] = posbx  = entity_table[1][2][1] + 0.1
+	
+	#box 0 (black)
+	posax  = entity_table[0][2][0]
+	posay  = entity_table[0][2][1]
+	sizeax = entity_table[0][2][2]
+	sizeay = entity_table[0][2][3]
+	pointa1 = (posax - (sizeax/2),posay - (sizeay/2))#topleft
+	pointa2 = (posax + (sizeax/2),posay - (sizeay/2))#topright
+	pointa3 = (posax + (sizeax/2),posay + (sizeay/2))#bottomright
+	pointa4 = (posax - (sizeax/2),posay + (sizeay/2))#bottomleft
+
+	#box1(red)
+	posbx  = entity_table[1][2][0]
+	posby  = entity_table[1][2][1]
+	sizebx = entity_table[1][2][2]
+	sizeby = entity_table[1][2][3]
+	pointb1 = (posbx - (sizebx/2),posby - (sizeby/2))
+	pointb2 = (posbx + (sizebx/2),posby - (sizeby/2))
+	pointb3 = (posbx + (sizebx/2),posby + (sizeby/2))
+	pointb4 = (posbx - (sizebx/2),posby + (sizeby/2))
+	
+	#test top left of ent a, with bottom right of ent b.
+	#make sure ent a bottom right not within ent b.
+	if pointa1[0] <= pointb3[0] and pointa1[1] <= pointb3[1]:
+		if pointa3[0] >= pointb3[0] and pointa3[1] >= pointb3[1]:
+			#test for which corner to set ent a at.
+			#have this balance out detection based on size of ents.
+			if abs(pointa1[0]-pointb3[0]) < abs(pointa1[1]-pointb3[1]):
+				entity_table[0][2][0] = posbx + ((sizeax/2)+(sizebx/2))
+			#elif abs(pointa1[0]-pointb3[0]) > abs(pointa1[1]-pointb3[1]):
+			else:
+				entity_table[0][2][1] = posby + ((sizeay/2)+(sizeby/2))
+			
+	#test top right of a with bottom left of b
+	if pointa2[0] >= pointb4[0] and pointa2[1] <= pointb4[1]:
+		if pointa4[0] <= pointb4[0] and pointa4[1] >= pointb4[1]:
+			if abs(pointa2[0]-pointb4[0]) < abs(pointa2[1]-pointb4[1]):
+				entity_table[0][2][0] = posbx - ((sizeax/2)+(sizebx/2))
+			#elif abs(pointa2[0]-pointb4[0]) > abs(pointa2[1]-pointb4[1]):
+			else:
+				entity_table[0][2][1] = posby + ((sizeay/2)+(sizeby/2))
+
+	#test bottom right of a with top left of b
+	if pointa3[0] >= pointb1[0] and pointa3[1] >= pointb1[1]:
+		if pointa1[0] <= pointb1[0] and pointa1[1] <= pointb1[1]:
+			if abs(pointa3[0]-pointb1[0]) < abs(pointa3[1]-pointb1[1]):
+				entity_table[0][2][0] = posbx - ((sizeax/2)+(sizebx/2))
+			#elif abs(pointa3[0]-pointb1[0]) > abs(pointa3[1]-pointb1[1]):
+			else:
+				entity_table[0][2][1] = posby - ((sizeay/2)+(sizeby/2))
+				
+	#test bottom left with top right
+	if pointa4[0] <= pointb2[0] and pointa4[1] >= pointb2[1]:
+		if pointa2[0] >= pointb2[0] and pointa2[1] <= pointb2[1]:
+			if abs(pointa4[0]-pointb2[0]) < abs(pointa4[1]-pointb2[1]):
+				entity_table[0][2][0] = posbx + ((sizeax/2)+(sizebx/2))
+			#elif abs(pointa4[0]-pointb2[0]) > abs(pointa4[1]-pointb2[1]):
+			else:
+				entity_table[0][2][1] = posby - ((sizeay/2)+(sizeby/2))
+
