@@ -26,8 +26,8 @@ entity_table = [
 		"entity", #physical or fixture
 		[
 
-			100,#pos  x
-			50,#pos  y
+			200,#pos  x
+			200,#pos  y
 			90,#size x
 			90,#size y
 		],
@@ -66,12 +66,6 @@ while w < 2000:
 	#Collision detections
 	#for i in range(len(entity_table)):
 	
-	#move for testing
-	entity_table[0][2][0],entity_table[0][2][1] = pygame.mouse.get_pos()
-	
-	entity_table[1][2][0] = posbx  = entity_table[1][2][0] + 0.1
-	entity_table[1][2][1] = posbx  = entity_table[1][2][1] + 0.1
-	
 	#box 0 (black)
 	posax  = entity_table[0][2][0]
 	posay  = entity_table[0][2][1]
@@ -101,3 +95,21 @@ while w < 2000:
 	leftb   = (pointb1[0]+pointb4[0])/2
 	rightb  = (pointb2[0]+pointb3[0])/2	
 	
+
+	if topa > bottomb or bottoma < topb or lefta > rightb or righta < leftb:
+		pass
+	else:
+		xdiff = abs(posax-posbx)
+		ydiff = abs(posay-posby)
+		
+		if xdiff >= ydiff:
+			if posax >= posbx:
+				entity_table[0][2][0] = posbx + ((sizeax/2)+(sizebx/2))
+			if posax < posbx:
+				entity_table[0][2][0] = posbx - ((sizeax/2)+(sizebx/2))	
+		if xdiff <= ydiff:	
+			if posay >= posby:
+				entity_table[0][2][1] = posby + ((sizeay/2)+(sizeby/2))
+			if posay < posby:
+				entity_table[0][2][1] = posby - ((sizeay/2)+(sizeby/2))	
+		
