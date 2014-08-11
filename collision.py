@@ -31,8 +31,8 @@ entity_table = [
 
 			200,#pos  x
 			200,#pos  y
-			20,#size x
-			20,#size y
+			60,#size x
+			60,#size y
 			0,#inertia
 		],
 	],
@@ -44,8 +44,8 @@ entity_table = [
 
 			400,#pos  x
 			400,#pos  y
-			20,#size x
-			20,#size y
+			30,#size x
+			30,#size y
 			0,#inertia
 		],
 	],
@@ -79,50 +79,54 @@ while w < 2000:
 	
 	entity_table[0][3][0],entity_table[0][3][1] = pygame.mouse.get_pos()
 	
-	#box 0 (black)
-	posax  = entity_table[0][3][0]
-	posay  = entity_table[0][3][1]
-	sizeax = entity_table[0][3][2]
-	sizeay = entity_table[0][3][3]
-	pointa1 = (posax - (sizeax/2),posay - (sizeay/2))#topleft
-	pointa2 = (posax + (sizeax/2),posay - (sizeay/2))#topright
-	pointa3 = (posax + (sizeax/2),posay + (sizeay/2))#bottomright
-	pointa4 = (posax - (sizeax/2),posay + (sizeay/2))#bottomleft
-	topa    = (pointa1[1]+pointa2[1])/2
-	bottoma = (pointa3[1]+pointa4[1])/2
-	lefta   = (pointa1[0]+pointa4[0])/2
-	righta  = (pointa2[0]+pointa3[0])/2
-	
+	for x in range(len(entity_table)):
+		for y in range(len(entity_table)):
+			if x == y:
+				break
+			#box 0 (black)
+			posax  = entity_table[x][3][0]
+			posay  = entity_table[x][3][1]
+			sizeax = entity_table[x][3][2]
+			sizeay = entity_table[x][3][3]
+			pointa1 = (posax - (sizeax/2),posay - (sizeay/2))#topleft
+			pointa2 = (posax + (sizeax/2),posay - (sizeay/2))#topright
+			pointa3 = (posax + (sizeax/2),posay + (sizeay/2))#bottomright
+			pointa4 = (posax - (sizeax/2),posay + (sizeay/2))#bottomleft
+			topa    = (pointa1[1]+pointa2[1])/2
+			bottoma = (pointa3[1]+pointa4[1])/2
+			lefta   = (pointa1[0]+pointa4[0])/2
+			righta  = (pointa2[0]+pointa3[0])/2
+			
 
-	#box1(red)
-	posbx  = entity_table[1][3][0]
-	posby  = entity_table[1][3][1]
-	sizebx = entity_table[1][3][2]
-	sizeby = entity_table[1][3][3]
-	pointb1 = (posbx - (sizebx/2),posby - (sizeby/2))
-	pointb2 = (posbx + (sizebx/2),posby - (sizeby/2))
-	pointb3 = (posbx + (sizebx/2),posby + (sizeby/2))
-	pointb4 = (posbx - (sizebx/2),posby + (sizeby/2))
-	topb    = (pointb1[1]+pointb2[1])/2
-	bottomb = (pointb3[1]+pointb4[1])/2
-	leftb   = (pointb1[0]+pointb4[0])/2
-	rightb  = (pointb2[0]+pointb3[0])/2	
-	
+			#box1(red)
+			posbx  = entity_table[y][3][0]
+			posby  = entity_table[y][3][1]
+			sizebx = entity_table[y][3][2]
+			sizeby = entity_table[y][3][3]
+			pointb1 = (posbx - (sizebx/2),posby - (sizeby/2))
+			pointb2 = (posbx + (sizebx/2),posby - (sizeby/2))
+			pointb3 = (posbx + (sizebx/2),posby + (sizeby/2))
+			pointb4 = (posbx - (sizebx/2),posby + (sizeby/2))
+			topb    = (pointb1[1]+pointb2[1])/2
+			bottomb = (pointb3[1]+pointb4[1])/2
+			leftb   = (pointb1[0]+pointb4[0])/2
+			rightb  = (pointb2[0]+pointb3[0])/2	
+			
 
-	if topa > bottomb or bottoma < topb or lefta > rightb or righta < leftb:
-		pass
-	else:
-		xdiff = abs(posax-posbx)
-		ydiff = abs(posay-posby)
-		
-		if xdiff >= ydiff:
-			if posax >= posbx:
-				entity_table[0][3][0] = posbx + ((sizeax/2)+(sizebx/2))
-			if posax < posbx:
-				entity_table[0][3][0] = posbx - ((sizeax/2)+(sizebx/2))	
-		if xdiff < ydiff:	
-			if posay >= posby:
-				entity_table[0][3][1] = posby + ((sizeay/2)+(sizeby/2))
-			if posay < posby:
-				entity_table[0][3][1] = posby - ((sizeay/2)+(sizeby/2))	
-		
+			if topa > bottomb or bottoma < topb or lefta > rightb or righta < leftb:
+				pass
+			else:
+				xdiff = abs(posax-posbx)
+				ydiff = abs(posay-posby)
+				
+				if xdiff >= ydiff:
+					if posax >= posbx:
+						entity_table[x][3][0] = posbx + ((sizeax/2)+(sizebx/2))
+					if posax < posbx:
+						entity_table[x][3][0] = posbx - ((sizeax/2)+(sizebx/2))	
+				if xdiff < ydiff:	
+					if posay >= posby:
+						entity_table[x][3][1] = posby + ((sizeay/2)+(sizeby/2))
+					if posay < posby:
+						entity_table[x][3][1] = posby - ((sizeay/2)+(sizeby/2))	
+				
