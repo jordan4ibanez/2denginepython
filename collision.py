@@ -70,6 +70,23 @@ entity_table = [
 
 w = 0
 while w < 2000:
+	key = pygame.key.get_pressed()
+	#debug for player entity
+	#clean this up and make this it's own function eventually
+	
+	#close program
+	if key[pygame.K_ESCAPE]:
+		sys.exit()
+	#X
+	if key[pygame.K_RIGHT]:
+		entity_table[1][3][4][0] = entity_table[1][3][4][0] + 0.1
+	elif key[pygame.K_LEFT]:
+		entity_table[1][3][4][0] = entity_table[1][3][4][0] - 0.1
+	#Y	
+	if key[pygame.K_UP]:
+		entity_table[1][3][4][1] = entity_table[1][3][4][1] - 0.1
+	elif key[pygame.K_DOWN]:
+		entity_table[1][3][4][1] = entity_table[1][3][4][1] + 0.1
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:sys.exit()
 	screen.fill(white)
@@ -97,21 +114,6 @@ while w < 2000:
 			text = fontbig.render("ent_"+str(x)+" posx:"+str(posx)+" posy:"+str(posy)+" inertx:"+str(inertx)+" inerty:"+str(inerty), 1, (10, 10, 10))
 			screen.blit(text, (10,x*25))
 	
-	
-	#debug for player entity
-	#clean this up and make this it's own function eventually
-	
-	key = pygame.key.get_pressed()
-	#X
-	if key[pygame.K_RIGHT]:
-		entity_table[1][3][4][0] = entity_table[1][3][4][0] + 0.1
-	elif key[pygame.K_LEFT]:
-		entity_table[1][3][4][0] = entity_table[1][3][4][0] - 0.1
-	#Y	
-	if key[pygame.K_UP]:
-		entity_table[1][3][4][1] = entity_table[1][3][4][1] - 0.1
-	elif key[pygame.K_DOWN]:
-		entity_table[1][3][4][1] = entity_table[1][3][4][1] + 0.1
 	
 	#momentum	
 	for x in range(len(entity_table)):
