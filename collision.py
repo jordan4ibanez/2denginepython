@@ -4,7 +4,7 @@ screensize = width,height = 1000,800
 screen = pygame.display.set_mode(screensize)
 pygame.init()
 font = pygame.font.Font("font/Kirvy-Regular.otf", 10)
-
+fontbig = pygame.font.Font("font/Kirvy-Regular.otf", 30)
 black = 0,0,0
 white = 255,255,255
 
@@ -77,21 +77,25 @@ while w < 2000:
 	for x in range(len(entity_table)):
 		if entity_table[x][0] == "rectangle":
 			#take raw list data and convert to applicable rendering data
-			posx  = entity_table[x][3][0]
-			posy  = entity_table[x][3][1]
-			sizex = entity_table[x][3][2]
-			sizey = entity_table[x][3][3]
-			color = entity_table[x][2]
+			posx   = entity_table[x][3][0]
+			posy   = entity_table[x][3][1]
+			sizex  = entity_table[x][3][2]
+			sizey  = entity_table[x][3][3]
+			inertx = entity_table[x][3][4][0]
+			inerty = entity_table[x][3][4][1]
+			color  = entity_table[x][2]
 			point1 = (posx - (sizex/2),posy - (sizey/2))
 			point2 = (posx + (sizex/2),posy - (sizey/2))
 			point3 = (posx + (sizex/2),posy + (sizey/2))
 			point4 = (posx - (sizex/2),posy + (sizey/2))
 			
 			pygame.draw.polygon(screen,color,(point1,point2,point3,point4))
-			text = font.render(str(x), 1, (10, 10, 10))
-			screen.blit(text, (posx,posy))
+			entity_box = font.render(str(x), 1, (10, 10, 10))
+			screen.blit(entity_box, (posx,posy))
 			
-	pygame.display.flip()
+			#debug info			
+			text = fontbig.render("ent_"+str(x)+" posx:"+str(posx)+" posy:"+str(posy)+" inertx:"+str(inertx)+" inerty:"+str(inerty), 1, (10, 10, 10))
+			screen.blit(text, (10,x*25))
 	
 	
 	#debug for player entity
@@ -205,26 +209,28 @@ while w < 2000:
 					#compare inertia of a to b
 					if abs(inertya) < abs(inertyb):
 						if posay >= posby:
-							entity_table[x][3][1] = posby + ((sizeay/2)+(sizeby/2)) + 2
+							entity_table[x][3][1] = posby + ((sizeay/2)+(sizeby/2)) + 1
 							#transfer inertia
 							entity_table[x][3][4][1] = entity_table[y][3][4][1]
 						if posay < posby:
-							entity_table[x][3][1] = posby - ((sizeay/2)+(sizeby/2)) - 2
+							entity_table[x][3][1] = posby - ((sizeay/2)+(sizeby/2)) - 1
 							entity_table[x][3][4][1] = entity_table[y][3][4][1]
 					if abs(inertya) > abs(inertyb):
 						if posay <= posby:
-							entity_table[y][3][1] = posay + ((sizeay/2)+(sizeby/2)) + 2
+							entity_table[y][3][1] = posay + ((sizeay/2)+(sizeby/2)) + 1
 							entity_table[y][3][4][1] = entity_table[x][3][4][1]
 						if posay > posby:
-							entity_table[y][3][1] = posay - ((sizeay/2)+(sizeby/2)) - 2
+							entity_table[y][3][1] = posay - ((sizeay/2)+(sizeby/2)) - 1
 							entity_table[y][3][4][1] = entity_table[x][3][4][1]
 					#do equal inertia for kicks
 					if abs(inertya) == abs(inertyb):
 						if posay <= posby:
-							entity_table[y][3][1] = posay + ((sizeay/2)+(sizeby/2)) + 2
+							entity_table[y][3][1] = posay + ((sizeay/2)+(sizeby/2)) + 1
 							entity_table[y][3][4][1] = 0
 							entity_table[x][3][4][1] = 0							
 						if posay > posby:
-							entity_table[y][3][1] = posay - ((sizeay/2)+(sizeby/2)) - 2
+							entity_table[y][3][1] = posay - ((sizeay/2)+(sizeby/2)) - 1
 							entity_table[y][3][4][1] = 0
 							entity_table[x][3][4][1] = 0
+			
+	pygame.display.flip()
