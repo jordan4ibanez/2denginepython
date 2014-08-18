@@ -15,3 +15,7 @@ include bounciness in coll detec
 calculate collision detection based on size, inertia, and position instead of just inertia and position
 
 eventually include friction 
+
+make collision detection check for if the entity exists, if no, pass
+
+when entities are deleted use entity_table.remove[NUMBER] for easy dynamic deletion and additions
