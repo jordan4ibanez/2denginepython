@@ -19,3 +19,5 @@ eventually include friction
 make collision detection check for if the entity exists, if no, pass
 
 when entities are deleted use entity_table.remove[NUMBER] for easy dynamic deletion and additions
+
+make entities evenly deflect each other instead of relying soley on inertia to create illusion of perfect collision detection
