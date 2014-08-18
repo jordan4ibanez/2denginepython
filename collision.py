@@ -103,34 +103,32 @@ while w < 2000:
 		entity_table[1][3][4][0] = entity_table[1][3][4][0] + 0.1
 	elif key[pygame.K_LEFT]:
 		entity_table[1][3][4][0] = entity_table[1][3][4][0] - 0.1
-	#slowdown x
-	else:
-		if entity_table[1][3][4][0] > 0:
-			entity_table[1][3][4][0] = entity_table[1][3][4][0] - 0.1
-		elif entity_table[1][3][4][0] < 0:
-			entity_table[1][3][4][0] = entity_table[1][3][4][0] + 0.1
-	#correct for floating point error
-	if entity_table[1][3][4][0] < 0.1 and entity_table[1][3][4][0] > -0.1:
-		entity_table[1][3][4][0] = 0
 	#Y	
 	if key[pygame.K_UP]:
 		entity_table[1][3][4][1] = entity_table[1][3][4][1] - 0.1
 	elif key[pygame.K_DOWN]:
 		entity_table[1][3][4][1] = entity_table[1][3][4][1] + 0.1
-	#slowdown Y
-	else:
-		if entity_table[1][3][4][1] > 0:
-			entity_table[1][3][4][1] = entity_table[1][3][4][1] - 0.1
-		elif entity_table[1][3][4][1] < 0:
-			entity_table[1][3][4][1] = entity_table[1][3][4][1] + 0.1
-	#correct for floating point error
-	if entity_table[1][3][4][1] < 0.1 and entity_table[1][3][4][1] > -0.1:
-		entity_table[1][3][4][1] = 0
 	
 	#momentum	
 	for x in range(len(entity_table)):
 		entity_table[x][3][0] = entity_table[x][3][0] + entity_table[x][3][4][0]
 		entity_table[x][3][1] = entity_table[x][3][1] + entity_table[x][3][4][1]
+		#slow down for test air resistance x
+		if entity_table[x][3][4][0] > 0:
+			entity_table[x][3][4][0] = entity_table[x][3][4][0] - 0.05
+		elif entity_table[x][3][4][0] < 0:
+			entity_table[x][3][4][0] = entity_table[x][3][4][0] + 0.05
+		#correct for floating point error
+		if entity_table[x][3][4][0] < 0.05 and entity_table[x][3][4][0] > -0.05:
+			entity_table[x][3][4][0] = 0
+		#slow down for test air resistance y
+		if entity_table[x][3][4][1] > 0:
+			entity_table[x][3][4][1] = entity_table[x][3][4][1] - 0.05
+		elif entity_table[x][3][4][1] < 0:
+			entity_table[x][3][4][1] = entity_table[x][3][4][1] + 0.05
+		#correct for floating point error
+		if entity_table[x][3][4][1] < 0.05 and entity_table[x][3][4][1] > -0.05:
+			entity_table[x][3][4][1] = 0 
 	
 	#Collision detections
 	for x in range(len(entity_table)):
