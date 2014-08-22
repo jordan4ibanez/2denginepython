@@ -115,3 +115,106 @@ less old second reverse pass collision
 						entity_table[x][3][1] = posby + ((sizeay/2)+(sizeby/2))
 					if posay < posby:
 						entity_table[x][3][1] = posby - ((sizeay/2)+(sizeby/2))
+
+OLD collision detection of ents against ents for the lost lands
+	#Collision detections of entities against entities
+	for x in range(len(entity_table)):
+		for y in range(len(entity_table)):
+			break
+			print("Test")
+			if x == y:
+				break
+			#box 0 (black)
+			posax  = entity_table[x][3][0]
+			posay  = entity_table[x][3][1]
+			sizeax = entity_table[x][3][2]
+			sizeay = entity_table[x][3][3]
+			pointa1 = (posax - (sizeax/2),posay - (sizeay/2))#topleft
+			pointa2 = (posax + (sizeax/2),posay - (sizeay/2))#topright
+			pointa3 = (posax + (sizeax/2),posay + (sizeay/2))#bottomright
+			pointa4 = (posax - (sizeax/2),posay + (sizeay/2))#bottomleft
+			topa    = (pointa1[1]+pointa2[1])/2
+			bottoma = (pointa3[1]+pointa4[1])/2
+			lefta   = (pointa1[0]+pointa4[0])/2
+			righta  = (pointa2[0]+pointa3[0])/2
+			inertxa = entity_table[x][3][4][0]
+			inertya = entity_table[x][3][4][1] 
+			#box1(red)
+			posbx  = entity_table[y][3][0]
+			posby  = entity_table[y][3][1]
+			sizebx = entity_table[y][3][2]
+			sizeby = entity_table[y][3][3]
+			pointb1 = (posbx - (sizebx/2),posby - (sizeby/2))
+			pointb2 = (posbx + (sizebx/2),posby - (sizeby/2))
+			pointb3 = (posbx + (sizebx/2),posby + (sizeby/2))
+			pointb4 = (posbx - (sizebx/2),posby + (sizeby/2))
+			topb    = (pointb1[1]+pointb2[1])/2
+			bottomb = (pointb3[1]+pointb4[1])/2
+			leftb   = (pointb1[0]+pointb4[0])/2
+			rightb  = (pointb2[0]+pointb3[0])/2
+			inertxb = entity_table[y][3][4][0]
+			inertyb = entity_table[y][3][4][1]
+			
+			#if outside range pass, if in, do bounding box sorting
+			if topa > bottomb or bottoma < topb or lefta > rightb or righta < leftb:
+				pass
+			else:
+
+				xdiff = abs(posax-posbx)
+				ydiff = abs(posay-posby)
+				if xdiff >= ydiff:
+					#compare inertia of a to b
+					if abs(inertxa) < abs(inertxb):
+						if posax >= posbx:
+							entity_table[x][3][0] = posbx + ((sizeax/2)+(sizebx/2)) + 1
+							#transfer inertia
+							entity_table[x][3][4][0] = entity_table[y][3][4][0]
+						if posax < posbx:
+							entity_table[x][3][0] = posbx - ((sizeax/2)+(sizebx/2)) - 1
+							entity_table[x][3][4][0] = entity_table[y][3][4][0]
+					if abs(inertxa) > abs(inertxb):
+						if posax <= posbx:
+							entity_table[y][3][0] = posax + ((sizeax/2)+(sizebx/2)) + 1
+							entity_table[y][3][4][0] = entity_table[x][3][4][0]
+						if posax > posbx:
+							entity_table[y][3][0] = posax - ((sizeax/2)+(sizebx/2)) - 1
+							entity_table[y][3][4][0] = entity_table[x][3][4][0]
+					#do equal inertia for kicks
+					if abs(inertxa) == abs(inertxb):
+						if posax <= posbx:
+							entity_table[y][3][0] = posax + ((sizeax/2)+(sizebx/2)) + 1
+							entity_table[y][3][4][0] = 0
+							entity_table[x][3][4][0] = 0							
+						if posax > posbx:
+							entity_table[y][3][0] = posax - ((sizeax/2)+(sizebx/2)) - 1
+							entity_table[y][3][4][0] = 0
+							entity_table[x][3][4][0] = 0
+				if xdiff <= ydiff:
+					#compare inertia of a to b
+					if abs(inertya) < abs(inertyb):
+						if posay >= posby:
+							entity_table[x][3][1] = posby + ((sizeay/2)+(sizeby/2)) + 1
+							#transfer inertia
+							entity_table[x][3][4][1] = entity_table[y][3][4][1]
+						if posay < posby:
+							entity_table[x][3][1] = posby - ((sizeay/2)+(sizeby/2)) - 1
+							entity_table[x][3][4][1] = entity_table[y][3][4][1]
+					if abs(inertya) > abs(inertyb):
+						if posay <= posby:
+							entity_table[y][3][1] = posay + ((sizeay/2)+(sizeby/2)) + 1
+							entity_table[y][3][4][1] = entity_table[x][3][4][1]
+						if posay > posby:
+							entity_table[y][3][1] = posay - ((sizeay/2)+(sizeby/2)) - 1
+							entity_table[y][3][4][1] = entity_table[x][3][4][1]
+					#do equal inertia for kicks
+					if abs(inertya) == abs(inertyb):
+						if posay <= posby:
+							entity_table[y][3][1] = posay + ((sizeay/2)+(sizeby/2)) + 1
+							entity_table[y][3][4][1] = 0
+							entity_table[x][3][4][1] = 0							
+						if posay > posby:
+							entity_table[y][3][1] = posay - ((sizeay/2)+(sizeby/2)) - 1
+							entity_table[y][3][4][1] = 0
+							entity_table[x][3][4][1] = 0
+			
+

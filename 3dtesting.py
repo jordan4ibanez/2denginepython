@@ -19,37 +19,17 @@ red   = 255,0,0
 blue  = 0,0,255
 pygame.init()
 
-test = 0
 while 1:
-	#this is a test of gfxdraw vs normal blit speed
-	test = test + 1
-	if test > 1000:
-		test = 0
-	clock.tick()
-	col = (255, 0, 0)
 	screen.fill((255, 255, 255))
-	#begin testing
-	tester = fontbig.render("Let's draw 50 circles each frame using", 1, black)
-	screen.blit(tester, (10,10))
-	if test > 500:
-		tester = fontbig.render("gfx", 1, red)
-		screen.blit(tester, (565,10))
-		for x in range(50):
-			for y in range(50):
-				#pygame.gfxdraw.aacircle(screen, 50, 50, 30, col)
-				pygame.gfxdraw.filled_circle(screen, 50, 80, 30, col)
-	if test < 500:
-		tester = fontbig.render("draw", 1, blue)
-		screen.blit(tester, (565,10))
-		for x in range(50):
-			for y in range(50):
-				pygame.draw.circle(screen, red, (50,80), 30)
-	#sarcasm
-	tester = fontbig.render("<-50 Circles", 1, black)
-	screen.blit(tester, (105,60))				
-	#print fps
+	clock.tick()
+
+	for x in range(50):
+		for y in range(50):
+			#pygame.gfxdraw.aacircle(screen, 50, 50, 30, col)
+			pygame.gfxdraw.filled_circle(screen, 50, 80, 30, black)
+				
 	fps = round(clock.get_fps())
 	fps_text = fontbig.render(str(fps), 1, black)
-	screen.blit(fps_text, (640,10))
-	#end testing
+	screen.blit(fps_text, (10,10))
+	
 	pygame.display.flip()
